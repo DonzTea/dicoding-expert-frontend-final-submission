@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ImageminWebpWebpackPlugin = require('imagemin-webp-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -38,7 +39,12 @@ module.exports = {
   optimization: {
     minimize: true,
     minimizer: [
-      `...`,
+      new TerserPlugin({
+        parallel: true,
+        terserOptions: {
+          compress: true
+        },
+      }),
       new CssMinimizerPlugin(),
       new UglifyJsPlugin()
     ],
